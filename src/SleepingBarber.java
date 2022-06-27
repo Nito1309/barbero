@@ -9,25 +9,22 @@ import java.util.concurrent.Executors;
 
 public class SleepingBarber implements Runnable{
 
-    JTextArea txtConsole;
-
-    public SleepingBarber(JTextArea txtConsole) {
+    public SleepingBarber(JTextArea txtConsole, JTextField barbers, JTextField chairs) {
         this.txtConsole = txtConsole;
+        this.barbers = barbers;
+        this.chairs = chairs;
     }
+
+    JTextArea txtConsole;
+    JTextField barbers, chairs;
 
     @Override
     public void run() {
-        int noOfBarbers=2, customerId=1, noOfCustomers=100, noOfChairs;	//initializing the number of barber and customers
+        int noOfBarbers=2, customerId=1, noOfCustomers=10, noOfChairs;	//initializing the number of barber and customers
 
-        Scanner sc = new Scanner(System.in);
+        noOfBarbers = Integer.parseInt(barbers.getText());
+        noOfChairs = Integer.parseInt(chairs.getText());
 
-        System.out.println("Enter the number of barbers(M):");			//input M barbers
-        //noOfBarbers=sc.nextInt();
-
-        System.out.println("Enter the number of waiting room"			//input N waiting chairs
-                + " chairs(N):");
-        //noOfChairs=sc.nextInt();
-        noOfChairs = 3;
 
 //    	System.out.println("Enter the number of customers:");			//inout the number of customers for the shop
 //    	noOfCustomers=sc.nextInt();
@@ -36,7 +33,7 @@ public class SleepingBarber implements Runnable{
         Bshop shop = new Bshop(noOfBarbers, noOfChairs, txtConsole);				//initializing the barber shop with the number of barbers
         Random r = new Random();  										//a random number to calculate delays for customer arrivals and haircut
 
-        System.out.println("\nBarber shop opened with "
+        txtConsole.append("\nBarber shop opened with "
                 +noOfBarbers+" barber(s)\n");
 
         long startTime  = System.currentTimeMillis();					//start time of program
@@ -71,24 +68,23 @@ public class SleepingBarber implements Runnable{
 
         exec.shutdown();												//shuts down the executor service and frees all the resources
         try {
-            exec.awaitTermination(2, SECONDS);								//waits for 12 seconds until all the threads finish their execution
+            exec.awaitTermination(7, SECONDS);								//waits for 12 seconds until all the threads finish their execution
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         long elapsedTime = System.currentTimeMillis() - startTime;		//to calculate the end time of program
 
-        System.out.println("\nBarber shop closed");
-        System.out.println("\nTotal time elapsed in seconds"
+        txtConsole.append("\nBarber shop closed");
+        txtConsole.append("\nTotal time elapsed in seconds"
                 + " for serving "+noOfCustomers+" customers by "
                 +noOfBarbers+" barbers with "+noOfChairs+
                 " chairs in the waiting room is: "
                 + TimeUnit.MILLISECONDS
                 .toSeconds(elapsedTime));
-        System.out.println("\nTotal customers: "+noOfCustomers+
+        txtConsole.append("\nTotal customers: "+noOfCustomers+
                 "\nTotal customers served: "+shop.getTotalHairCuts()
                 +"\nTotal customers lost: "+shop.getCustomerLost());
 
-        sc.close();
     }
 }

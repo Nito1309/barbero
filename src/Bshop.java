@@ -45,7 +45,7 @@ class Bshop {
             while(listCustomer.size()==0) {
 
                 txtConsole.append("\nBarber "+barberId+" is waiting "
-                        + "for the customer and sleeps in his chair");
+                        + "for the customer and sleeps in his chair\n");
 
                 try {
 
@@ -61,7 +61,7 @@ class Bshop {
 
             txtConsole.append("Customer "+customer.getCustomerId()+
                     " finds the barber asleep and wakes up "
-                    + "the barber "+barberId);
+                    + "the barber "+barberId+"\n");
         }
 
         int millisDelay=0;
@@ -79,14 +79,14 @@ class Bshop {
 
             txtConsole.append("\nCompleted Cutting hair of "+
                     customer.getCustomerId()+" by barber " +
-                    barberId +" in "+millisDelay+ " milliseconds.");
+                    barberId +" in "+millisDelay+ " milliseconds.\n");
 
             totalHairCuts.incrementAndGet();
             //exits through the door
             if(listCustomer.size()>0) {
                 txtConsole.append("Barber "+barberId+					//barber finds a sleeping customer in the waiting room, wakes him up and
                         " wakes up a customer in the "					//and then goes to his chair and sleeps until a customer arrives
-                        + "waiting room");
+                        + "waiting room\n");
             }
 
             availableBarbers++;											//barber is available for haircut for the next customer
@@ -102,7 +102,7 @@ class Bshop {
 
         txtConsole.append("\nCustomer "+customer.getCustomerId()+
                 " enters through the entrance door in the the shop at "
-                +customer.getInTime());
+                +customer.getInTime()+"\n");
 
         synchronized (listCustomer) {
 
@@ -110,7 +110,7 @@ class Bshop {
 
                 txtConsole.append("\nNo chair available "
                         + "for customer "+customer.getCustomerId()+
-                        " so customer leaves the shop");
+                        " so customer leaves the shop\n");
 
                 customersLost.incrementAndGet();
 
@@ -127,7 +127,7 @@ class Bshop {
 
                 txtConsole.append("All barber(s) are busy so "+
                         customer.getCustomerId()+
-                        " takes a chair in the waiting room");
+                        " takes a chair in the waiting room\n");
 
                 if(listCustomer.size()==1)
                     listCustomer.notify();
